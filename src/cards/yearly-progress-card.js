@@ -157,13 +157,12 @@ const renderYearlyProgressCard = (stats = {}, options = { hide: [] }) => {
         <circle class="rank-circle" cx="-10" cy="8" r="40" />
         <g class="rank-text">
           <text
-            x="${rank.level.length === 1 ? "-4" : "0"}"
+            x="${rank.level.length === 2 || rank.level.length === 3 ? "-4" : "0"}"
             y="0"
             alignment-baseline="central"
             dominant-baseline="central"
             text-anchor="middle"
-          >
-            ${rank.level}
+          >${rank.level}
           </text>
         </g>
       </g>`;
@@ -193,7 +192,7 @@ const renderYearlyProgressCard = (stats = {}, options = { hide: [] }) => {
 
   const card = new Card({
     customTitle: custom_title,
-    defaultTitle: i18n.t("statcard.title"),
+    defaultTitle: custom_title,
     width,
     height,
     border_radius,

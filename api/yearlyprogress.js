@@ -14,7 +14,10 @@ const { isLocaleAvailable } = require("../src/translations");
 
 module.exports = async (req, res) => {
   const {
-    username,
+    CurrentDay,
+    DaysLeft,
+    Progress,
+    date,
     hide,
     hide_title,
     hide_border,
@@ -39,9 +42,6 @@ module.exports = async (req, res) => {
 
   res.setHeader("Content-Type", "image/svg+xml");
 
-  if (blacklist.includes(username)) {
-    return res.send(renderError("Something went wrong"));
-  }
 
   if (locale && !isLocaleAvailable(locale)) {
     return res.send(renderError("Something went wrong", "Language not found"));
@@ -49,10 +49,11 @@ module.exports = async (req, res) => {
 
   try {
     stats = {
-      rank: { level: "89", score: 89 },
-      name:"Test",
-      DaysLeft: 0,
-      CurrentDay: 365}
+      rank: { level: Progress?Progress+"%":"0%", score: Progress?100-parseInt(Progress):100 },
+      name:"test",
+
+      DaysLeft: DaysLeft?DaysLeft:"0",
+      CurrentDay: CurrentDay?CurrentDay:"365"}
 
     const cacheSeconds = clampValue(
       parseInt(cache_seconds || CONSTANTS.TWO_HOURS, 10),
@@ -76,11 +77,12 @@ module.exports = async (req, res) => {
         text_color,
         bg_color,
         theme,
-        custom_title,
+        custom_title:date?date:"Unspecified",
         border_radius,
         border_color,
         locale: locale ? locale.toLowerCase() : null,
         disable_animations: parseBoolean(disable_animations),
+
       }),
     );
   } catch (err) {
