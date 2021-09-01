@@ -8,6 +8,7 @@ const {
 } = require("../src/common/utils");
 const fetchStats = require("../src/fetchers/stats-fetcher");
 const renderStatsCard = require("../src/cards/stats-card");
+const renderYearlyProgressCard = require("../src/cards/yearly-progress-card");
 const blacklist = require("../src/common/blacklist");
 const { isLocaleAvailable } = require("../src/translations");
 
@@ -47,11 +48,11 @@ module.exports = async (req, res) => {
   }
 
   try {
-    stats = await fetchStats(
-      username,
-      parseBoolean(count_private),
-      parseBoolean(include_all_commits),
-    );
+    stats = {
+      rank: { level: "89", score: 89 },
+      name:"Test",
+      DaysLeft: 0,
+      CurrentDay: 365}
 
     const cacheSeconds = clampValue(
       parseInt(cache_seconds || CONSTANTS.TWO_HOURS, 10),
@@ -62,7 +63,7 @@ module.exports = async (req, res) => {
     res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);
 
     return res.send(
-      renderStatsCard(stats, {
+      renderYearlyProgressCard(stats, {
         hide: parseArray(hide),
         show_icons: parseBoolean(show_icons),
         hide_title: parseBoolean(hide_title),
