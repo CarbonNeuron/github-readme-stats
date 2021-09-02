@@ -144,8 +144,8 @@ class Card {
 
         <rect
           data-testid="card-bg"
-          x="0.5"
-          y="0.5"
+          x="0"
+          y="0"
           rx="${this.border_radius}"
           height="99%"
           stroke="${this.colors.borderColor}"
