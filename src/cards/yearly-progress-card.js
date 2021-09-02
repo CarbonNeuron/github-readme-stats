@@ -51,6 +51,7 @@ const renderYearlyProgressCard = (stats = {}, options = { hide: [] }) => {
     CurrentDay,
     DaysLeft,
     rank,
+    bottomText,
   } = stats;
   const {
     hide = [],
@@ -64,9 +65,9 @@ const renderYearlyProgressCard = (stats = {}, options = { hide: [] }) => {
     icon_color,
     text_color,
     bg_color,
-    theme = "github_dark",
+    theme = "outrun",
     custom_title,
-    border_radius,
+    border_radius = 0,
     border_color,
     locale,
     disable_animations = true,
@@ -190,6 +191,7 @@ const renderYearlyProgressCard = (stats = {}, options = { hide: [] }) => {
     )
     : 495;
 
+
   const card = new Card({
     customTitle: custom_title,
     defaultTitle: custom_title,
@@ -203,6 +205,7 @@ const renderYearlyProgressCard = (stats = {}, options = { hide: [] }) => {
       bgColor,
       borderColor,
     },
+    bottomText
   });
 
   card.setHideBorder(hide_border);
@@ -213,7 +216,6 @@ const renderYearlyProgressCard = (stats = {}, options = { hide: [] }) => {
 
   return card.render(`
     ${rankCircle}
-
     <svg x="0" y="0">
       ${flexLayout({
     items: statItems,

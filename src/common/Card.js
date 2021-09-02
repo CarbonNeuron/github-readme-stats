@@ -10,10 +10,11 @@ class Card {
     customTitle,
     defaultTitle = "",
     titlePrefixIcon,
+    bottomText = ""
   }) {
     this.width = width;
     this.height = height;
-
+    this.bottomText = bottomText;
     this.hideBorder = false;
     this.hideTitle = false;
 
@@ -87,7 +88,7 @@ class Card {
       >
         ${flexLayout({
           items: [this.titlePrefixIcon && prefixIcon, titleText],
-          gap: 25,
+          gap: 25,direction: "column"
         }).join("")}
       </g>
     `;
@@ -125,7 +126,7 @@ class Card {
       >
         <style>
           .header {
-            font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
+            font: 600 24px 'Segoe UI', Ubuntu, Sans-Serif;
             fill: ${this.colors.titleColor};
             animation: fadeInAnimation 0.8s ease-in-out forwards;
           }
@@ -158,6 +159,10 @@ class Card {
         />
 
         ${this.hideTitle ? "" : this.renderTitle()}
+        
+        <g class="rank-text" opacity="0.3">
+          <text x="5" y="99.5%" dominant-baseline="text-after-edge" text-anchor="start">${this.bottomText}</text>
+        </g>
 
         <g
           data-testid="main-card-body"

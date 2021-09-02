@@ -14,6 +14,7 @@ const { isLocaleAvailable } = require("../src/translations");
 
 module.exports = async (req, res) => {
   const {
+    BottomText,
     CurrentDay,
     DaysLeft,
     Progress,
@@ -51,7 +52,7 @@ module.exports = async (req, res) => {
     stats = {
       rank: { level: Progress?Progress+"%":"0%", score: Progress?100-parseInt(Progress):100 },
       name:"test",
-
+      bottomText: BottomText?BottomText:"",
       DaysLeft: DaysLeft?DaysLeft:"0",
       CurrentDay: CurrentDay?CurrentDay:"365"}
 
