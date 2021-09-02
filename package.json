@@ -28,6 +28,7 @@
     "emoji-name-map": "^1.2.8",
     "github-username-regex": "^1.0.0",
     "prettier": "^2.1.2",
+    "svg-to-img": "^2.0.9",
     "word-wrap": "^1.2.3"
   },
   "husky": {

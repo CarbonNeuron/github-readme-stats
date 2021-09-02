@@ -147,9 +147,9 @@ class Card {
           x="0"
           y="0"
           rx="${this.border_radius}"
-          height="99%"
+          height="100%"
           stroke="${this.colors.borderColor}"
-          width="${this.width - 1}"
+          width="${this.width - 0}"
           fill="${
             typeof this.colors.bgColor === "object"
               ? "url(#gradient)"

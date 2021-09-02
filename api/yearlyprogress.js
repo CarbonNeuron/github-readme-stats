@@ -6,6 +6,7 @@ const {
   clampValue,
   CONSTANTS,
 } = require("../src/common/utils");
+const svgToImg = require("svg-to-img");
 const fetchStats = require("../src/fetchers/stats-fetcher");
 const renderStatsCard = require("../src/cards/stats-card");
 const renderYearlyProgressCard = require("../src/cards/yearly-progress-card");
@@ -41,7 +42,7 @@ module.exports = async (req, res) => {
   } = req.query;
   let stats;
 
-  res.setHeader("Content-Type", "image/svg+xml");
+  res.setHeader("Content-Type", "image/png");
 
 
   if (locale && !isLocaleAvailable(locale)) {
@@ -63,29 +64,26 @@ module.exports = async (req, res) => {
     );
 
     res.setHeader("Cache-Control", `public, max-age=${cacheSeconds}`);
-
-    return res.send(
-      renderYearlyProgressCard(stats, {
-        hide: parseArray(hide),
-        show_icons: parseBoolean(show_icons),
-        hide_title: parseBoolean(hide_title),
-        hide_border: parseBoolean(hide_border),
-        hide_rank: parseBoolean(hide_rank),
-        include_all_commits: parseBoolean(include_all_commits),
-        line_height,
-        title_color,
-        icon_color,
-        text_color,
-        bg_color,
-        theme,
-        custom_title:date?date:"Unspecified",
-        border_radius,
-        border_color,
-        locale: locale ? locale.toLowerCase() : null,
-        disable_animations: parseBoolean(disable_animations),
-
-      }),
-    );
+    const image = await svgToImg.from(renderYearlyProgressCard(stats, {
+      hide: parseArray(hide),
+      show_icons: parseBoolean(show_icons),
+      hide_title: parseBoolean(hide_title),
+      hide_border: parseBoolean(hide_border),
+      hide_rank: parseBoolean(hide_rank),
+      include_all_commits: parseBoolean(include_all_commits),
+      line_height,
+      title_color,
+      icon_color,
+      text_color,
+      bg_color,
+      theme,
+      custom_title:date?date:"Unspecified",
+      border_radius,
+      border_color,
+      locale: locale ? locale.toLowerCase() : null,
+      disable_animations: parseBoolean(disable_animations),
+    })).toPng()
+    return res.send(image);
   } catch (err) {
     return res.send(renderError(err.message, err.secondaryMessage));
   }
